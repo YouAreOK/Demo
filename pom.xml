@@ -25,6 +25,7 @@
         <maven-failsafe-plugin.version>2.21.0</maven-failsafe-plugin.version>
         <!-- Configurable variables -->
         <threads>1</threads>
+        <browser>firefox</browser>
     </properties>
 
     <build>
@@ -37,6 +38,26 @@
                     <target>${java.version}</target>
                 </configuration>
                 <version>${maven-compiler-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>${threads}</threadCount>
+                    <systemPropertyVariables>
+                        <browser>${browser}</browser>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

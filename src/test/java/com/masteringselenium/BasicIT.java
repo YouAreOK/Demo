@@ -8,15 +8,20 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
-public class BasicTest {
+import java.util.ResourceBundle;
+
+public class BasicIT extends DriverBase {
 
     private ExpectedCondition<Boolean> pageTitleStartsWith(final String searchString) {
         return driver -> driver.getTitle().toLowerCase().startsWith(searchString.toLowerCase());
     }
 
     private void googleExampleThatSearchesFor(final String searchString) {
-        System.setProperty("webdriver.gecko.driver", "C:\\Program Files\\selenium\\geckodriver.exe");
-        WebDriver driver = new FirefoxDriver();
+//        ResourceBundle resource = ResourceBundle.getBundle("config");
+//        String geckodriver = resource.getString("geckodriver");
+//        System.setProperty("webdriver.gecko.driver", geckodriver);
+//        WebDriver driver = new FirefoxDriver();
+        WebDriver driver = DriverBase.getDriver();
 
         driver.get("http://www.baidu.com");
 
@@ -34,7 +39,6 @@ public class BasicTest {
 
         System.out.println("Page title is: " + driver.getTitle());
 
-        driver.quit();
     }
 
     @Test
