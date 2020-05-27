@@ -1,10 +1,12 @@
 package com.masteringselenium;
 
 import com.masteringselenium.config.DriverFactory;
+import com.masteringselenium.listeners.ScreenshotListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +16,7 @@ import java.util.List;
  * Created by Andy on 2020/4/13 20:52
  *封装驱动对象池
  */
+@Listeners(ScreenshotListener.class)
 public class DriverBase {
     private static List<DriverFactory> webDriverThreadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
     private static ThreadLocal<DriverFactory> driverThread;
@@ -39,7 +42,7 @@ public class DriverBase {
         try {
             getDriver().manage().deleteAllCookies();
         } catch (Exception ex) {
-            System.err.println("Unable to delete cookies: " + ex);
+            System.err.println("Unable to delete cookies: " + ex.getCause());
         }
     }
 
