@@ -22,10 +22,13 @@ import java.util.HashMap;
  * Created by 20191109 on 2020/4/13 21:48
  * 设置多浏览器驱动
  */
+
+
 public enum DriverType implements DriverSetup {
     FIREFOX {
         public RemoteWebDriver getWebDriverObject(DesiredCapabilities capabilities) {
             FirefoxOptions options = new FirefoxOptions();
+            options.setHeadless(HEADLESS);
             options.merge(capabilities);
 
             return new FirefoxDriver(options);
@@ -38,6 +41,7 @@ public enum DriverType implements DriverSetup {
 
             ChromeOptions options = new ChromeOptions();
             options.merge(capabilities);
+            options.setHeadless(HEADLESS);
             options.addArguments("--no-default-browser-check");
             options.setExperimentalOption("prefs", chromePreferences);
 
@@ -78,5 +82,7 @@ public enum DriverType implements DriverSetup {
 
             return new OperaDriver(options);
         }
-    }
+    };
+    //    获取是否支持后台运行驱动程序
+    public final static boolean HEADLESS = Boolean.getBoolean("headless");
 }

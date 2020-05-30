@@ -1,16 +1,23 @@
 package com.masteringselenium;
 
+import com.masteringselenium.config.DriverBase;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+
+import java.net.MalformedURLException;
 import java.util.ResourceBundle;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class BasicIT extends DriverBase {
+
 
     private ExpectedCondition<Boolean> pageTitleStartsWith(final String searchString) {
         return driver -> driver.getTitle().toLowerCase().startsWith(searchString.toLowerCase());
@@ -34,7 +41,13 @@ public class BasicIT extends DriverBase {
 
         searchField.submit();
 
-        WebDriverWait wait = new WebDriverWait(driver, 10, 100);
+        WebDriverWait wait = new WebDriverWait(getDriver(), 15, 100);
+        //判断jq的aiax请求是否加载完毕
+        wait.until(AdditionalConditions.jQueryAJAXCallsHaveCompleted());
+
+//        wait.until(AdditionalConditions.weFindElementWd);
+
+//        WebDriverWait wait = new WebDriverWait(driver, 10, 100);
         wait.until(pageTitleStartsWith(searchString));
 
         System.out.println("Page title is: " + driver.getTitle());
@@ -50,4 +63,6 @@ public class BasicIT extends DriverBase {
     public void googleMilkExample() {
         googleExampleThatSearchesFor("Milk!");
     }
+
+
 }
