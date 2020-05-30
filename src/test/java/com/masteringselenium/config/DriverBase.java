@@ -1,6 +1,8 @@
 package com.masteringselenium.config;
 
 import com.masteringselenium.listeners.ScreenshotListener;
+import com.masteringselenium.config.DriverFactory;
+import com.masteringselenium.listeners.ScreenshotListener;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -41,7 +43,7 @@ public class DriverBase {
         try {
             getDriver().manage().deleteAllCookies();
         } catch (Exception ex) {
-            System.err.println("Unable to delete cookies: " + ex.getCause());
+            System.err.println("Unable to delete cookies: " + ex);
         }
     }
 
